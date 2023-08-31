@@ -1,15 +1,13 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Login from "../components/auth";
+import Register from "../components/register";
 
 const AppRoutes = (): JSX.Element => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/"></Route>
-        <Route></Route>
-        <Route></Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Login />}></Route>
+      <Route path="/register" element={<Register />}></Route>
+    </Routes>
   );
 };
 
