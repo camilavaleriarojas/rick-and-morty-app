@@ -15,7 +15,7 @@ export interface State {
   authUser: AuthUser;
   isLoading: boolean;
   error: string | undefined;
-  authError?: string;
+  authError?: boolean;
 }
 
 export type ActionsType = ActionType<typeof actions>;
