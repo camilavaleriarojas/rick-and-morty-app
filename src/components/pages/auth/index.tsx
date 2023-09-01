@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { login } from "../../redux/auth/thunk";
+import { login } from "../../../redux/auth/thunk";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../types/index";
+import { AppDispatch } from "../../../types/index";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +13,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../../redux/store";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -22,6 +23,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch: AppDispatch<null> = useDispatch();
   const { authUser: token } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
 
   const handleLogin = (e: any) => {
     e.preventDefault();
@@ -84,7 +86,7 @@ const Login = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link variant="body2" onClick={() => navigate("/register")}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

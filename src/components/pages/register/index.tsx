@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../types/index";
+import { AppDispatch } from "../../../types/index";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,8 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { RootState } from "../../redux/store";
-import { register } from "../../redux/register/thunk";
+import { RootState } from "../../../redux/store";
+import { register } from "../../../redux/register/thunk";
+import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -24,8 +25,9 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const dispatch: AppDispatch<null> = useDispatch();
   const { authUser: token } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
 
-  const handleLogin = (e: any) => {
+  const handleRegister = (e: any) => {
     e.preventDefault();
     dispatch(
       register({
@@ -58,7 +60,7 @@ const Register = () => {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleLogin}
+            onSubmit={handleRegister}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -112,8 +114,8 @@ const Register = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link variant="body2" onClick={() => navigate("/")}>
+                  {"Already have an account? Login"}
                 </Link>
               </Grid>
             </Grid>
