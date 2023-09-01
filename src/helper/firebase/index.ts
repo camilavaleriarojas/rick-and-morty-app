@@ -1,6 +1,8 @@
 import "firebase/compat/auth";
 import { getAuth } from "firebase/auth";
 import firebase from "firebase/compat/app";
+import store from "../../redux/store";
+import { loginSuccess, setAuthentication } from "../../redux/auth/actions";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -15,44 +17,27 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 
-// export const tokenListener = () => {
-//   auth.onIdTokenChanged(async (user) => {
-//     try {
-//       if (user) {
-//         const {
-//           token,
-//           claims: { role, email, name, picture, isActive },
-//         } = await user.getIdTokenResult(true);
-//         store.dispatch(
-//           loginSuccess({
-//             token,
-//             accessRoleType: role,
-//             email,
-//             name,
-//             photo: picture,
-//             isActive: isActive,
-//           })
-//         );
-//         localStorage.setItem("token", token);
-//         localStorage.setItem("role", role);
-//       } else {
-//         localStorage.removeItem("token");
-//         localStorage.removeItem("role");
-//         store.dispatch(
-//           setAuthentication({
-//             token: "",
-//             accessRoleType: "",
-//             email: "",
-//             name: "",
-//             photo: "",
-//             isActive: false,
-//           })
-//         );
-//       }
-//     } catch (error: any) {
-//       return console.error(error);
-//     }
-//   });
-// };
+export const tokenListener = () => {
+  auth.onIdTokenChanged(async (user) => {
+    try {
+      if (user) {
+        const { token } = await user.getIdTokenResult(true);
+        store.dispatch(
+          loginSuccess({
+            token,
+          })
+        );
+      } else {
+        store.dispatch(
+          setAuthentication({
+            token: "",
+          })
+        );
+      }
+    } catch (error: any) {
+      return console.error(error);
+    }
+  });
+};
 
 export default firebaseApp;
